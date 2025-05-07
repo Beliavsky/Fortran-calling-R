@@ -1,0 +1,20 @@
+executables = xfit_var_ifx.exe
+FC     = ifx
+FFLAGS = /nologo /heap-arrays /Zi /Od /check:all /traceback /fpe-all:0 /warn:all /assume:protect_parens /implicitnone /stand:f23
+obj    = kind.obj constants.obj util.obj random.obj sim_time_series.obj r.obj xfit_var.obj
+
+all: $(executables)
+
+# Compile .f90 to .obj
+%.obj: %.f90
+	$(FC) $(FFLAGS) -c $<
+
+xfit_var_ifx.exe: kind.obj constants.obj util.obj random.obj sim_time_series.obj r.obj xfit_var.obj
+	$(FC) -o xfit_var_ifx.exe kind.obj constants.obj util.obj random.obj sim_time_series.obj r.obj xfit_var.obj $(FFLAGS)
+
+run: $(executables)
+	./xfit_var_ifx.exe
+
+clean:
+	rm -f $(executables) $(obj)
+
