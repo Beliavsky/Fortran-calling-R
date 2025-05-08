@@ -8,7 +8,10 @@ real(kind=dp), allocatable :: x(:,:)
 integer, parameter :: nrows=10**6, ncols=2
 real(kind=dp), parameter :: var_coeff_1(ncols, ncols) = &
    reshape([3, -4, -2, 5], [ncols, ncols]) / 10.0_dp
+integer :: var_order
 x = sim_vector_ar(nrows, var_coeff_1)
 call print_stats(x)
-call fit_vector_ar(x, var_order=2)
+do var_order=1,2
+   call fit_vector_ar(x, var_order=var_order)
+end do
 end program xfit_var
